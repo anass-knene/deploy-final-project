@@ -16,6 +16,7 @@ const userSchema = new Schema({
   repeatPassword: { type: String, required: true },
   hourly_rate: { type: Number },
   description: { type: String, required: true },
+  favorite: [{ type: mongoose.Schema.Types.ObjectId, ref: "jobs" }],
 });
-const UserCollection = mongoose.model("user", userSchema);
+const UserCollection = mongoose.model("users", userSchema);
 module.exports = UserCollection;

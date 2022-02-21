@@ -13,6 +13,7 @@ const typeDefs = gql`
     repeatPassword: String!
     hourly_rate: Int
     description: String!
+    favorite: [JobType]
   }
 
   # company type
@@ -28,6 +29,7 @@ const typeDefs = gql`
     password: String!
     repeatPassword: String!
     description: String!
+    favorite: [UserType]
     jobs: [JobType]
   }
   #  UserAuth type
