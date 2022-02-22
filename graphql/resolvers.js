@@ -10,7 +10,7 @@ const resolvers = {
   Query: {
     // user queries
     getUsers: async (_, args) => {
-      const getAllUsers = await UserCollection.find({});
+      const getAllUsers = await UserCollection.find({}).populate("favorite");
       if (getAllUsers) {
         return getAllUsers;
       } else {
@@ -22,7 +22,7 @@ const resolvers = {
       // req.session.cookie.token = true;
       // console.log(req.session);
       if (req.session.isAuthenticated) {
-        const getUser = await UserCollection.findById(id);
+        const getUser = await UserCollection.findById(id).populate("favorite");
         if (getUser) {
           return getUser;
         } else {
@@ -34,7 +34,9 @@ const resolvers = {
     },
     // company queries
     getCompanies: async () => {
-      const getAllCompanies = await CompanyCollection.find().populate("jobs");
+      const getAllCompanies = await CompanyCollection.find()
+        .populate("jobs")
+        .populate("favorite");
 
       if (getAllCompanies) {
         return getAllCompanies;
@@ -43,7 +45,9 @@ const resolvers = {
       }
     },
     async getOneCompany(_, { id }) {
-      const getCompany = await CompanyCollection.findById(id).populate("jobs");
+      const getCompany = await CompanyCollection.findById(id)
+        .populate("jobs")
+        .populate("favorite");
 
       if (getCompany) {
         return getCompany;
