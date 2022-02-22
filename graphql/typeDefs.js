@@ -1,147 +1,68 @@
 const { gql } = require("apollo-server");
+const {
+  loginCompany,
+  addCompany,
+  deleteCompany,
+  updateCompany,
+} = require("./company/companyTypeDef/companyMutation");
+const {
+  getCompanies,
+  getOneCompany,
+} = require("./company/companyTypeDef/companyQuery");
+const {
+  CompanyType,
+  CompanyAuthType,
+} = require("./company/companyTypeDef/companyType");
+
+const { JobType } = require("./job/jobTypeDef/jobType");
+const { getOneJob, getJobs } = require("./job/jobTypeDef/jobQuery");
+const {
+  addJob,
+  updateJob,
+  deleteJob,
+} = require("./job/jobTypeDef/jobMutation");
+const { UserType, UserAuthType } = require("./user/userTypeDef/userType");
+const { getUsers, getOneUser } = require("./user/userTypeDef/query");
+
+const {
+  loginUser,
+  addUser,
+  deleteUser,
+  updateUser,
+} = require("./user/userTypeDef/mutation");
 
 const typeDefs = gql`
-  # user type
-  type UserType {
-    id: ID
-    first_name: String!
-    last_name: String!
-    avatar: String
-    email: String!
-    phone: String!
-    password: String!
-    repeatPassword: String!
-    hourly_rate: Int
-    description: String!
-    favorite: [JobType]
-  }
 
-  # company type
-  type CompanyType {
-    id: ID
-    company_name: String!
-    owner_name: String!
-    avatar: String
-    company_type: String!
-    address: String!
-    phone: String!
-    email: String!
-    password: String!
-    repeatPassword: String!
-    description: String!
-    favorite: [UserType]
-    jobs: [JobType]
-  }
-  #  UserAuth type
-  type UserAuthType {
-    userId: ID!
-    token: String!
-    tokenExpiration: Int!
-    user: UserType
-  }
-  # companyAuth type
-  type CompanyAuthType {
-    companyId: ID!
-    token: String!
-    tokenExpiration: Int!
-    company: CompanyType
-  }
-
-  # job type
-  type JobType {
-    id: ID
-    job_Title: String!
-    company_Name: String!
-    date: String!
-    num_of_people_needed: Int!
-    job_description: String!
-    created_by: CompanyType
-  }
+    ${UserType}
+    ${UserAuthType}
+    ${CompanyType}
+    ${CompanyAuthType}
+    ${JobType}
   type Query {
-    # user Query
-    getUsers: [UserType]
-    getOneUser(id: ID): UserType
-    # company Query
-    getCompanies: [CompanyType]
-    getOneCompany(id: ID): CompanyType
-    # job Query
-    getJobs: [JobType]
-    getOneJob(id: ID): JobType
+    ${getUsers}
+    ${getOneUser}
+    ${getCompanies}
+    ${getOneCompany}
+    ${getJobs}
+    ${getOneJob}
+
   }
   type Mutation {
-    # login user
-    loginUser(email: String!, password: String!): UserAuthType!
-    # login company
-    loginCompany(email: String!, password: String!): CompanyAuthType!
     # user Mutation
-    addUser(
-      first_name: String!
-      last_name: String!
-      email: String!
-      password: String!
-      repeatPassword: String!
-      phone: String!
-      hourly_rate: Int
-      description: String!
-    ): UserType
-    deleteUser(id: ID): UserType
-    updateUser(
-      id: ID!
-      first_name: String
-      last_name: String
-      avatar: String
-      email: String
-      password: String
-      phone: String
-      hourly_rate: Int
-      description: String
-    ): UserType
-    # Company Mutation
-    addCompany(
-      company_name: String!
-      owner_name: String!
-      avatar: String
-      company_type: String!
-      address: String!
-      phone: String!
-      email: String!
-      password: String!
-      repeatPassword: String!
-      description: String!
-    ): CompanyType
-    deleteCompany(id: ID): CompanyType
-    updateCompany(
-      id: ID!
-      company_name: String
-      owner_name: String
-      avatar: String
-      company_type: String
-      address: String
-      phone: String
-      email: String
-      password: String
-      description: String
-    ): CompanyType
+    ${loginUser}
+    ${loginCompany}
+    ${addUser}
+    ${deleteUser}
+    ${updateUser}
+    # company Mutation
+    ${addCompany}
+    ${deleteCompany}
+    ${updateCompany}
     # job Mutation
-    addJob(
-      id: ID
-      job_Title: String!
-      company_Name: String!
-      date: String!
-      num_of_people_needed: Int!
-      job_description: String!
-      created_by: ID!
-    ): JobType
-    deleteJob(id: ID): JobType
-    updateJob(
-      id: ID!
-      job_Title: String
-      company_Name: String
-      date: String
-      num_of_people_needed: Int
-      job_description: String
-      created_by: String
-    ): JobType
+    ${addJob}
+    ${deleteJob}
+    ${updateJob}
+
   }
 `;
 module.exports = { typeDefs };
