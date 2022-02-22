@@ -2,7 +2,7 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "node server",
     "dev": "nodemon server"
@@ -23,5 +23,9 @@
     "graphql-tools": "^8.2.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.1"
+  },
+  "engines": {
+    "node": "16.13.0",
+    "npm": "8.1.0"
   }
 }
