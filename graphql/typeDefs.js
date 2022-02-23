@@ -29,6 +29,7 @@ const {
   addUser,
   deleteUser,
   updateUser,
+  updateUserFavorite,
 } = require("./user/userTypeDef/mutation");
 
 const typeDefs = gql`
@@ -54,6 +55,7 @@ const typeDefs = gql`
     ${addUser}
     ${deleteUser}
     ${updateUser}
+    ${updateUserFavorite}
     # company Mutation
     ${addCompany}
     ${deleteCompany}

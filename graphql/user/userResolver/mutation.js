@@ -81,4 +81,28 @@ const deleteUser = async (_, args, { req }) => {
     throw new Error("you are not authenticated");
   }
 };
-module.exports = { loginUser, addUser, updateUser, deleteUser };
+// we need userId and favId from the client side
+const updateUserFavorite = async (_, args, { req }) => {
+  if (req.session.isAuthenticated) {
+    const findUser = await UserCollection.findById(args.userId);
+    if (findUser) {
+      let filterUserFavorite = findUser.favorite.filter(
+        (item) => item._id !== args.favId
+      );
+      findUser.favorite = filterUserFavorite;
+      await findUser.save();
+      return findUser;
+    } else {
+      throw new Error("no such user find");
+    }
+  } else {
+    throw new Error("you are not authenticated");
+  }
+};
+module.exports = {
+  loginUser,
+  addUser,
+  updateUser,
+  deleteUser,
+  updateUserFavorite,
+};

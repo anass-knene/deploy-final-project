@@ -26,5 +26,6 @@ const updateCompany = `updateCompany(
       email: String
       password: String
       description: String
+      
     ): CompanyType`;
 module.exports = { loginCompany, addCompany, deleteCompany, updateCompany };

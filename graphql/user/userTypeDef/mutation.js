@@ -24,5 +24,12 @@ const updateUser = ` updateUser(
       hourly_rate: Int
       description: String
     ): UserType`;
+const updateUserFavorite = `updateUserFavorite(userId:ID!,favId:ID!):UserType`;
 
-module.exports = { loginUser, addUser, deleteUser, updateUser };
+module.exports = {
+  loginUser,
+  addUser,
+  deleteUser,
+  updateUser,
+  updateUserFavorite,
+};
