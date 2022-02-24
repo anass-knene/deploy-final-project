@@ -14,7 +14,7 @@ const {
   CompanyAuthType,
 } = require("./company/companyTypeDef/companyType");
 
-const { JobType } = require("./job/jobTypeDef/jobType");
+const { JobType, ShortCompanyType } = require("./job/jobTypeDef/jobType");
 const { getOneJob, getJobs } = require("./job/jobTypeDef/jobQuery");
 const {
   addJob,
@@ -38,6 +38,7 @@ const typeDefs = gql`
     ${UserAuthType}
     ${CompanyType}
     ${CompanyAuthType}
+    ${ShortCompanyType}
     ${JobType}
   type Query {
     ${getUsers}
@@ -46,6 +47,7 @@ const typeDefs = gql`
     ${getOneCompany}
     ${getJobs}
     ${getOneJob}
+   
 
   }
   type Mutation {

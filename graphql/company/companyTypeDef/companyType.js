@@ -1,6 +1,6 @@
 const CompanyType = `type CompanyType {
     id: ID
-    company_name: String!
+    company_Name: String!
     owner_name: String!
     avatar: String
     company_type: String!
@@ -13,6 +13,7 @@ const CompanyType = `type CompanyType {
     favorite: [UserType]
     jobs: [JobType]
   }`;
+
 const CompanyAuthType = `  type CompanyAuthType {
     companyId: ID!
     token: String!

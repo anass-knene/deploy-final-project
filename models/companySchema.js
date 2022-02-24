@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const companySchema = new Schema({
-  company_name: { type: String, required: true },
+  company_Name: { type: String, required: true },
   owner_name: { type: String, required: true },
   avatar: {
     type: String,

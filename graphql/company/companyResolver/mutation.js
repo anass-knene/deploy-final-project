@@ -32,7 +32,7 @@ const loginCompany = async (_, { email, password }, { req }) => {
 };
 const addCompany = async (_, args) => {
   const schema = Joi.object({
-    company_name: Joi.string().min(2).max(50).required(),
+    company_Name: Joi.string().min(2).max(50).required(),
     owner_name: Joi.string().min(2).max(50).required(),
     company_type: Joi.string().min(2).max(50).required(),
     address: Joi.string().min(2).max(50).required(),
