@@ -14,6 +14,6 @@ const updateJob = `updateJob(
       end_Date: String
       num_of_people_needed: Int
       job_description: String
-      created_by: String
+    
     ): JobType`;
 module.exports = { addJob, deleteJob, updateJob };
