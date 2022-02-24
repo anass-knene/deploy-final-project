@@ -8,9 +8,10 @@ const ShortCompanyType = `type ShortCompanyType {
     description: String!
   }`;
 const JobType = `  type JobType {
-	id: ID
 	job_Title: String!
-	issued_At: String!
+  start_Date:String!
+  end_Date: String!
+	issued_At: String
 	num_of_people_needed: Int!
 	job_description: String!
 	created_by: ShortCompanyType
