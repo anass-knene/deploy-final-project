@@ -4,13 +4,13 @@ const { Schema } = mongoose;
 const companySchema = new Schema({
   company_Name: { type: String, required: true },
   owner_name: { type: String, required: true },
+  company_type: { type: String, required: true },
   avatar: {
     type: String,
     default: function () {
-      return `https://source.unsplash.com/1600x900/?${this.company_name}`;
+      return `https://source.unsplash.com/1600x900/?${this.company_type}`;
     },
   },
-  company_type: { type: String, required: true },
   address: { type: String, required: true },
   phone: { type: String, required: true },
   email: { type: String, required: true },
