@@ -1,3 +1,4 @@
 const getUsers = ` getUsers: [UserType]`;
 const getOneUser = ` getOneUser(id: ID): UserType`;
-module.exports = { getUsers, getOneUser };
+const getVerify = `getVerify: VerifyType`;
+module.exports = { getUsers, getOneUser, getVerify };

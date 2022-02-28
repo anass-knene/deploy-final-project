@@ -18,4 +18,9 @@ const UserAuthType = `type UserAuthType {
     user: UserType
   }`;
 
-module.exports = { UserType, UserAuthType };
+const verifyType = ` type VerifyType {
+ user:UserAuthType
+ token:String
+  }`;
+
+module.exports = { UserType, UserAuthType, verifyType };

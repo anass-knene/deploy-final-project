@@ -1,4 +1,8 @@
-const { getUsers, getOneUser } = require("./user/userResolver/query");
+const {
+  getUsers,
+  getOneUser,
+  verifyUser,
+} = require("./user/userResolver/query");
 const {
   loginUser,
   addUser,
@@ -21,7 +25,8 @@ const { addJob, updateJob, deleteJob } = require("./job/jobResolver/mutation");
 const resolvers = {
   Query: {
     getUsers: () => getUsers(),
-    getOneUser: (_, { id }, { req }) => getOneUser(_, { id }, { req }),
+    getOneUser: (_, { id }) => getOneUser(_, { id }),
+    // verifyUser: (_, __, { req }) => verifyUser(_, __, { req }),
 
     // company queries
     getCompanies: () => getCompanies(),
@@ -43,7 +48,7 @@ const resolvers = {
     deleteCompany: (_, args, { req }) => deleteCompany(_, args, { req }),
     // user Mutation
     addUser: (_, args) => addUser(_, args),
-    updateUser: (_, args) => updateUser(_, args, { req }),
+    updateUser: (_, args, { req }) => updateUser(_, args, { req }),
     deleteUser: (_, args, { req }) => deleteUser(_, args, { req }),
     // updateUserFavorite: (_, args, { req }) =>
     //   updateUserFavorite(_, args, { req }),

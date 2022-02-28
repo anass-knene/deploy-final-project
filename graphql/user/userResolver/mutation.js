@@ -13,12 +13,21 @@ const loginUser = async (_, { email, password }, { req }) => {
   if (!isMatch) {
     throw new Error("password is incorrect");
   }
-  const token = jwt.sign({ userId: user.id, email: user.email }, "secret-key", {
-    expiresIn: "2h",
-  });
-  req.session.isAuthenticated = true;
-  req.session.cookie.token = token;
+  console.log(user.id);
+  const token = jwt.sign(
+    { userId: user.id, email: user.email, name: "user" },
+    "secret-key",
+    {
+      expiresIn: "2h",
+    }
+  );
 
+  req.session.isAuthenticated = true;
+
+  req.session.cookie.token = token;
+  console.log("====================================");
+  console.log(req.session.isAuthenticated);
+  console.log("====================================");
   return { userId: user.id, token: token, tokenExpiration: 2, user: user };
 };
 
@@ -58,7 +67,7 @@ const addUser = async (_, args) => {
     const createUser = new UserCollection(args);
     return await createUser.save();
   } else {
-    throw new Error("error creating user");
+    throw new Error("user already exists");
   }
 };
 const updateUser = async (_, args, { req }) => {

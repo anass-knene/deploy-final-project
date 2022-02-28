@@ -11,7 +11,7 @@ const getCompanies = async () => {
     throw new Error("no companies found");
   }
 };
-const getOneCompany = async (_, { id }) => {
+const getOneCompany = async (_, { id }, { req }) => {
   const getCompany = await CompanyCollection.findById(id)
     .populate("jobs")
     .populate("favorite");

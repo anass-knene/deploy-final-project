@@ -20,9 +20,10 @@ const loginCompany = async (_, { email, password }, { req }) => {
       expiresIn: "2h",
     }
   );
+  console.log(req.session.isAuthenticated);
   req.session.isAuthenticated = true;
   req.session.cookie.token = token;
-
+  console.log(req.session.isAuthenticated);
   return {
     companyId: company.id,
     token: token,

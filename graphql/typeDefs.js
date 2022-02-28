@@ -21,8 +21,12 @@ const {
   updateJob,
   deleteJob,
 } = require("./job/jobTypeDef/jobMutation");
-const { UserType, UserAuthType } = require("./user/userTypeDef/userType");
-const { getUsers, getOneUser } = require("./user/userTypeDef/query");
+const {
+  UserType,
+  UserAuthType,
+  verifyType,
+} = require("./user/userTypeDef/userType");
+const { getUsers, getOneUser, getVerify } = require("./user/userTypeDef/query");
 
 const {
   loginUser,
@@ -33,21 +37,22 @@ const {
 } = require("./user/userTypeDef/mutation");
 
 const typeDefs = gql`
-
     ${UserType}
     ${UserAuthType}
     ${CompanyType}
     ${CompanyAuthType}
     ${ShortCompanyType}
     ${JobType}
+    ${verifyType}                      
   type Query {
+    
     ${getUsers}
     ${getOneUser}
     ${getCompanies}
     ${getOneCompany}
     ${getJobs}
     ${getOneJob}
-   
+    ${getVerify}
 
   }
   type Mutation {

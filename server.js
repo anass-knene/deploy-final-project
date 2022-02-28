@@ -7,7 +7,7 @@ app.use(
     secret: "secret-key",
     resave: false,
     saveUninitialized: false,
-    cookie: { expires: 36000 * 100 },
+    cookie: { expires: 24 * 60 * 60 * 1000 },
   })
 );
 const { ApolloServer } = require("apollo-server-express");
@@ -31,6 +31,7 @@ const server = new ApolloServer({
     if (!context.req.session.isAuthenticated) {
       context.req.session.isAuthenticated = false;
     }
+
     return context;
   },
   cors: true,
