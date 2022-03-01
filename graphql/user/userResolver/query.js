@@ -22,17 +22,12 @@ const getVerify = async (_, __, { req }) => {
 
   if (token) {
     const decode = jwt.verify(token, "secret-key");
-    // console.log("====================================");
-    // console.log(decode);
-    // console.log("====================================");
     if (decode) {
       const user =
         decode.name === "user"
           ? await UserCollection.findById(decode.userId)
           : await CompanyCollection.findById(decode.companyId);
-      console.log("====================================");
-      console.log(user);
-      console.log("====================================");
+
       if (decode.name == "user") {
         return { user: { userId: user._id, user }, token };
       } else {

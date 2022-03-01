@@ -22,12 +22,12 @@ const loginUser = async (_, { email, password }, { req }) => {
     }
   );
 
-  req.session.isAuthenticated = true;
+  // req.session.isAuthenticated = true;
 
-  req.session.cookie.token = token;
-  console.log("====================================");
-  console.log(req.session.isAuthenticated);
-  console.log("====================================");
+  // req.session.cookie.token = token;
+  // console.log("====================================");
+  // console.log(req.session.isAuthenticated);
+  // console.log("====================================");
   return { userId: user.id, token: token, tokenExpiration: 2, user: user };
 };
 
@@ -71,42 +71,44 @@ const addUser = async (_, args) => {
   }
 };
 const updateUser = async (_, args, { req }) => {
-  if (req.session.isAuthenticated) {
-    const updateUser = await UserCollection.findByIdAndUpdate(
-      args.id,
-      { ...args },
-      { new: true }
-    );
-    return updateUser;
-  } else {
-    throw new Error("you are not authenticated");
-  }
+  // if (req.session.isAuthenticated) {
+  const updateUser = await UserCollection.findByIdAndUpdate(
+    args.id,
+    { ...args },
+    { new: true }
+  );
+  return updateUser;
+  // }
+  // else {
+  //   throw new Error("you are not authenticated");
+  // }
 };
 const deleteUser = async (_, args, { req }) => {
-  if (req.session.isAuthenticated) {
-    const deleteUser = await UserCollection.findByIdAndDelete(args.id);
-    return deleteUser;
-  } else {
-    throw new Error("you are not authenticated");
-  }
+  // if (req.session.isAuthenticated) {
+  const deleteUser = await UserCollection.findByIdAndDelete(args.id);
+  return deleteUser;
+  // }
+  //  else {
+  //   throw new Error("you are not authenticated");
+  // // }
 };
 // we need userId and favId from the client side
 const updateUserFavorite = async (_, args, { req }) => {
-  if (req.session.isAuthenticated) {
-    const findUser = await UserCollection.findById(args.userId);
-    if (findUser) {
-      let filterUserFavorite = findUser.favorite.filter(
-        (item) => item._id !== args.favId
-      );
-      findUser.favorite = filterUserFavorite;
-      await findUser.save();
-      return findUser;
-    } else {
-      throw new Error("no such user find");
-    }
+  // if (req.session.isAuthenticated) {
+  const findUser = await UserCollection.findById(args.userId);
+  if (findUser) {
+    let filterUserFavorite = findUser.favorite.filter(
+      (item) => item._id !== args.favId
+    );
+    findUser.favorite = filterUserFavorite;
+    await findUser.save();
+    return findUser;
   } else {
-    throw new Error("you are not authenticated");
+    throw new Error("no such user find");
   }
+  // } else {
+  //   throw new Error("you are not authenticated");
+  // }
 };
 module.exports = {
   loginUser,
