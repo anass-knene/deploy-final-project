@@ -3,22 +3,25 @@ const CompanyCollection = require("../../../models/companySchema");
 const JobCollection = require("../../../models/jobSchema");
 
 const addJob = async (_, args, { req }) => {
-  if (req.session.isAuthenticated) {
-    const createJob = new JobCollection(args);
-    await createJob.save();
+  // if (req.session.isAuthenticated) {
+  const createJob = new JobCollection(args);
+  await createJob.save();
 
-    const company = await CompanyCollection.findById(args.created_by);
-    company.jobs.push(createJob._id);
-    await company.save();
-    const populateCreateJob = await createJob.populate({
-      path: "created_by",
-      model: "companies",
-    });
+  const company = await CompanyCollection.findById(args.created_by);
 
-    return populateCreateJob;
-  } else {
-    throw new ApolloError("unauthorized user", 403);
-  }
+  company.jobs.push(createJob._id);
+
+  await company.save();
+  const populateCreateJob = await createJob.populate({
+    path: "created_by",
+    model: "companies",
+  });
+
+  return populateCreateJob;
+  // }
+  // else {
+  //   throw new ApolloError("unauthorized user", 403);
+  // }
 };
 const updateJob = async (_, args, { req }) => {
   if (req.session.isAuthenticated) {

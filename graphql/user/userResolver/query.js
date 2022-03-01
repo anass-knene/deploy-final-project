@@ -1,6 +1,6 @@
 const CompanyCollection = require("../../../models/companySchema");
 const UserCollection = require("../../../models/userSchema");
-
+const jwt = require("jsonwebtoken");
 const getUsers = async () => {
   const getAllUsers = await UserCollection.find({}).populate("favorite");
   if (getAllUsers) {
@@ -17,20 +17,31 @@ const getOneUser = async (_, { id }) => {
     throw new Error("no user found");
   }
 };
-const verifyUser = async (_, __, { req }) => {
-  const tokenCookie = req.session.cookie.token;
-  if (tokenCookie) {
-    const decode = jwt.verify(tokenCookie, "secret-key");
+const getVerify = async (_, __, { req }) => {
+  const token = req.headers["token"];
+
+  if (token) {
+    const decode = jwt.verify(token, "secret-key");
+    // console.log("====================================");
+    // console.log(decode);
+    // console.log("====================================");
     if (decode) {
       const user =
         decode.name === "user"
-          ? await UserCollection.findById(decode.id)
-          : await CompanyCollection.findById(decode.id);
-      return user;
+          ? await UserCollection.findById(decode.userId)
+          : await CompanyCollection.findById(decode.companyId);
+      console.log("====================================");
+      console.log(user);
+      console.log("====================================");
+      if (decode.name == "user") {
+        return { user: { userId: user._id, user }, token };
+      } else {
+        return { user: { userId: user._id, company: user }, token };
+      }
     } else {
-      redirect("/");
+      throw new Error("you have to login");
     }
   }
 };
 
-module.exports = { getUsers, getOneUser, verifyUser };
+module.exports = { getUsers, getOneUser, getVerify };

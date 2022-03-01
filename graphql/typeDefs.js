@@ -24,7 +24,7 @@ const {
 const {
   UserType,
   UserAuthType,
-  verifyType,
+  VerifyType,
 } = require("./user/userTypeDef/userType");
 const { getUsers, getOneUser, getVerify } = require("./user/userTypeDef/query");
 
@@ -43,7 +43,7 @@ const typeDefs = gql`
     ${CompanyAuthType}
     ${ShortCompanyType}
     ${JobType}
-    ${verifyType}                      
+    ${VerifyType}                      
   type Query {
     
     ${getUsers}
