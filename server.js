@@ -2,14 +2,14 @@ const express = require("express");
 const app = express();
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
-app.use(
-  session({
-    secret: "secret-key",
-    resave: false,
-    saveUninitialized: false,
-    cookie: { expires: 24 * 60 * 60 * 1000, httpOnly: false },
-  })
-);
+// app.use(
+//   session({
+//     secret: "secret-key",
+//     resave: false,
+//     saveUninitialized: false,
+//     cookie: { expires: 24 * 60 * 60 * 1000, httpOnly: false },
+//   })
+// );
 app.use(cookieParser());
 const { ApolloServer } = require("apollo-server-express");
 const { typeDefs } = require("./graphql/typeDefs");
@@ -29,13 +29,6 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: (context) => {
-    console.log("====================================");
-    console.log(context.req.cookies);
-    console.log("====================================");
-    if (!context.req.session.isAuthenticated) {
-      context.req.session.isAuthenticated = false;
-    }
-
     return context;
   },
   cors: true,

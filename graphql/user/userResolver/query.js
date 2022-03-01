@@ -1,6 +1,6 @@
 const CompanyCollection = require("../../../models/companySchema");
 const UserCollection = require("../../../models/userSchema");
-
+const jwt = require("jsonwebtoken");
 const getUsers = async () => {
   const getAllUsers = await UserCollection.find({}).populate("favorite");
   if (getAllUsers) {
@@ -18,19 +18,26 @@ const getOneUser = async (_, { id }) => {
   }
 };
 const getVerify = async (_, __, { req }) => {
-  const tokenCookie = req.session.cookie.token;
+  const token = req.headers["token"];
 
-  console.log("====================================");
-  console.log(req);
-  console.log("====================================");
-  if (tokenCookie) {
-    const decode = jwt.verify(tokenCookie, "secret-key");
+  if (token) {
+    const decode = jwt.verify(token, "secret-key");
+    // console.log("====================================");
+    // console.log(decode);
+    // console.log("====================================");
     if (decode) {
       const user =
         decode.name === "user"
-          ? await UserCollection.findById(decode.id)
-          : await CompanyCollection.findById(decode.id);
-      return { user: user };
+          ? await UserCollection.findById(decode.userId)
+          : await CompanyCollection.findById(decode.companyId);
+      console.log("====================================");
+      console.log(user);
+      console.log("====================================");
+      if (decode.name == "user") {
+        return { user: { userId: user._id, user }, token };
+      } else {
+        return { user: { userId: user._id, company: user }, token };
+      }
     } else {
       throw new Error("you have to login");
     }

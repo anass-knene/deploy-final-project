@@ -16,11 +16,12 @@ const UserAuthType = `type UserAuthType {
     token: String!
     tokenExpiration: Int!
     user: UserType
+    company: CompanyType
   }`;
 
-const verifyType = ` type VerifyType {
+const VerifyType = `type VerifyType {
  user:UserAuthType
  token:String
   }`;
 
-module.exports = { UserType, UserAuthType, verifyType };
+module.exports = { UserType, UserAuthType, VerifyType };
