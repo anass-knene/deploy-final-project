@@ -17,8 +17,12 @@ const getOneUser = async (_, { id }) => {
     throw new Error("no user found");
   }
 };
-const verifyUser = async (_, __, { req }) => {
+const getVerify = async (_, __, { req }) => {
   const tokenCookie = req.session.cookie.token;
+
+  console.log("====================================");
+  console.log(req);
+  console.log("====================================");
   if (tokenCookie) {
     const decode = jwt.verify(tokenCookie, "secret-key");
     if (decode) {
@@ -26,11 +30,11 @@ const verifyUser = async (_, __, { req }) => {
         decode.name === "user"
           ? await UserCollection.findById(decode.id)
           : await CompanyCollection.findById(decode.id);
-      return user;
+      return { user: user };
     } else {
-      redirect("/");
+      throw new Error("you have to login");
     }
   }
 };
 
-module.exports = { getUsers, getOneUser, verifyUser };
+module.exports = { getUsers, getOneUser, getVerify };

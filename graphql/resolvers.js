@@ -1,7 +1,7 @@
 const {
   getUsers,
   getOneUser,
-  verifyUser,
+  getVerify,
 } = require("./user/userResolver/query");
 const {
   loginUser,
@@ -26,7 +26,7 @@ const resolvers = {
   Query: {
     getUsers: () => getUsers(),
     getOneUser: (_, { id }) => getOneUser(_, { id }),
-    // verifyUser: (_, __, { req }) => verifyUser(_, __, { req }),
+    getVerify: (_, __, { req }) => getVerify(_, __, { req }),
 
     // company queries
     getCompanies: () => getCompanies(),
@@ -40,8 +40,8 @@ const resolvers = {
     loginUser: (_, { email, password }, { req }) =>
       loginUser(_, { email, password }, { req }),
     // company login
-    loginCompany: (_, { email, password }, { req }) =>
-      loginCompany(_, { email, password }, { req }),
+    loginCompany: (_, { email, password }, { req, res }) =>
+      loginCompany(_, { email, password }, { req, res }),
     // company Mutation
     addCompany: (_, args) => addCompany(_, args),
     updateCompany: (_, args, { req }) => updateCompany(_, args, { req }),

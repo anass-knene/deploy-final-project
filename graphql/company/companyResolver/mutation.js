@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const CompanyCollection = require("../../../models/companySchema");
 
-const loginCompany = async (_, { email, password }, { req }) => {
+const loginCompany = async (_, { email, password }, { req, res }) => {
   const company = await CompanyCollection.findOne({ email: email });
   if (!company) {
     throw new Error("company dos not exist");
@@ -14,7 +14,7 @@ const loginCompany = async (_, { email, password }, { req }) => {
     throw new Error("password is incorrect");
   }
   const token = jwt.sign(
-    { companyId: company.id, email: company.email },
+    { companyId: company.id, name: "company", email: company.email },
     "secret-key",
     {
       expiresIn: "2h",
@@ -22,8 +22,9 @@ const loginCompany = async (_, { email, password }, { req }) => {
   );
   console.log(req.session.isAuthenticated);
   req.session.isAuthenticated = true;
-  req.session.cookie.token = token;
-  console.log(req.session.isAuthenticated);
+  res.cookie("token", token);
+
+  console.log(req.session);
   return {
     companyId: company.id,
     token: token,
