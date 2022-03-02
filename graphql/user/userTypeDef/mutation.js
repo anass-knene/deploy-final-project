@@ -5,7 +5,6 @@ const addUser = `addUser(
       last_name: String!
       email: String!
       password: String!
-      repeatPassword: String!
       phone: String!
       hourly_rate: Int
       description: String!

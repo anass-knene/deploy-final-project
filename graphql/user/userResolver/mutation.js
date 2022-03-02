@@ -37,7 +37,6 @@ const addUser = async (_, args) => {
     password: Joi.string().regex(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{5,15}$/
     ),
-    repeatPassword: Joi.any().valid(Joi.ref("password")).required(),
     hourly_rate: Joi.number(),
     description: Joi.string().min(5).max(150).required(),
   });

@@ -15,7 +15,6 @@ const companySchema = new Schema({
   phone: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
-  repeatPassword: { type: String, required: true },
   description: { type: String, required: true },
   favorite: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }],
   jobs: [{ type: mongoose.Schema.Types.ObjectId, ref: "jobs" }],
