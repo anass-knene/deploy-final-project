@@ -5,7 +5,10 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 const loginUser = async (_, { email, password }, { req }) => {
-  const user = await UserCollection.findOne({ email: email });
+  const user = await UserCollection.findOne({ email: email }).populate({
+    path: "favorite",
+    model: "jobs",
+  });
   if (!user) {
     throw new Error("user dos not exist");
   }
@@ -22,13 +25,7 @@ const loginUser = async (_, { email, password }, { req }) => {
     }
   );
 
-  // req.session.isAuthenticated = true;
-
-  // req.session.cookie.token = token;
-  // console.log("====================================");
-  // console.log(req.session.isAuthenticated);
-  // console.log("====================================");
-  return { userId: user.id, token: token, tokenExpiration: 2, user: user };
+  return { token: token, tokenExpiration: 2, user: user };
 };
 
 const addUser = async (_, args) => {
@@ -71,44 +68,54 @@ const addUser = async (_, args) => {
   }
 };
 const updateUser = async (_, args, { req }) => {
-  // if (req.session.isAuthenticated) {
-  const updateUser = await UserCollection.findByIdAndUpdate(
-    args.id,
-    { ...args },
-    { new: true }
-  );
-  return updateUser;
-  // }
-  // else {
-  //   throw new Error("you are not authenticated");
-  // }
+  const token = req.headers["token"];
+  if (token) {
+    const decode = jwt.verify(token, "secret-key");
+    if (decode) {
+      const updateUser = await UserCollection.findByIdAndUpdate(
+        args.id,
+        { ...args },
+        { new: true }
+      );
+      return updateUser;
+    }
+  } else {
+    throw new Error("you have to login");
+  }
 };
 const deleteUser = async (_, args, { req }) => {
-  // if (req.session.isAuthenticated) {
-  const deleteUser = await UserCollection.findByIdAndDelete(args.id);
-  return deleteUser;
-  // }
-  //  else {
-  //   throw new Error("you are not authenticated");
-  // // }
+  const token = req.headers["token"];
+  if (token) {
+    const decode = jwt.verify(token, "secret-key");
+    if (decode) {
+      const deleteUser = await UserCollection.findByIdAndDelete(args.id);
+      return deleteUser;
+    } else {
+      throw new Error("you have to login");
+    }
+  }
 };
 // we need userId and favId from the client side
 const updateUserFavorite = async (_, args, { req }) => {
-  // if (req.session.isAuthenticated) {
-  const findUser = await UserCollection.findById(args.userId);
-  if (findUser) {
-    let filterUserFavorite = findUser.favorite.filter(
-      (item) => item._id !== args.favId
-    );
-    findUser.favorite = filterUserFavorite;
-    await findUser.save();
-    return findUser;
-  } else {
-    throw new Error("no such user find");
+  const token = req.headers["token"];
+  if (token) {
+    const decode = jwt.verify(token, "secret-key");
+    if (decode) {
+      const findUser = await UserCollection.findById(args.userId);
+      if (findUser) {
+        let filterUserFavorite = findUser.favorite.filter(
+          (item) => item._id !== args.favId
+        );
+        findUser.favorite = filterUserFavorite;
+        await findUser.save();
+        return findUser;
+      } else {
+        throw new Error("no such user find");
+      }
+    } else {
+      throw new Error("you have to login");
+    }
   }
-  // } else {
-  //   throw new Error("you are not authenticated");
-  // }
 };
 module.exports = {
   loginUser,

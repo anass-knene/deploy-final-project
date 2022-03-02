@@ -15,7 +15,6 @@ const CompanyType = `type CompanyType {
   }`;
 
 const CompanyAuthType = `  type CompanyAuthType {
-    companyId: ID!
     token: String!
     tokenExpiration: Int!
     company: CompanyType

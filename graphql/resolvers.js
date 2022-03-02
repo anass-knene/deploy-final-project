@@ -25,7 +25,7 @@ const { addJob, updateJob, deleteJob } = require("./job/jobResolver/mutation");
 const resolvers = {
   Query: {
     getUsers: () => getUsers(),
-    getOneUser: (_, { id }) => getOneUser(_, { id }),
+    getOneUser: (_, { id }, { req }) => getOneUser(_, { id }, { req }),
     getVerify: (_, __, { req }) => getVerify(_, __, { req }),
 
     // company queries
@@ -44,7 +44,8 @@ const resolvers = {
       loginCompany(_, { email, password }, { req, res }),
     // company Mutation
     addCompany: (_, args) => addCompany(_, args),
-    updateCompany: (_, args, { req }) => updateCompany(_, args, { req }),
+    updateCompany: (_, args, { req }) =>
+      /* middleware(_,args,{req})=> */ updateCompany(_, args, { req }),
     deleteCompany: (_, args, { req }) => deleteCompany(_, args, { req }),
     // user Mutation
     addUser: (_, args) => addUser(_, args),
