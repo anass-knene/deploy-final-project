@@ -9,7 +9,6 @@ const addCompany = `addCompany(
       phone: String!
       email: String!
       password: String!
-      repeatPassword: String!
       description: String!
     ): CompanyType`;
 

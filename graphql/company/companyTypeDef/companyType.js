@@ -8,7 +8,6 @@ const CompanyType = `type CompanyType {
     phone: String!
     email: String!
     password: String!
-    repeatPassword: String!
     description: String!
     favorite: [UserType]
     jobs: [JobType]

@@ -43,7 +43,6 @@ const addCompany = async (_, args) => {
     password: Joi.string().regex(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{5,15}$/
     ),
-    repeatPassword: Joi.any().valid(Joi.ref("password")).required(),
     description: Joi.string().min(5).max(150).required(),
   });
   const { value, error } = schema.validate(args, { abortEarly: false });
@@ -66,12 +65,10 @@ const addCompany = async (_, args) => {
     email: args.email,
   });
   if (!findCompany) {
-    if (args.password == args.repeatPassword) {
-      const hashedPassword = bcrypt.hashSync(args.password, 10);
-      args.password = hashedPassword;
-      const createCompany = new CompanyCollection(args);
-      return await createCompany.save();
-  
+    const hashedPassword = bcrypt.hashSync(args.password, 10);
+    args.password = hashedPassword;
+    const createCompany = new CompanyCollection(args);
+    return await createCompany.save();
   } else {
     throw new Error("Company already exist");
   }

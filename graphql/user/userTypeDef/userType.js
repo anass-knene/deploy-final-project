@@ -6,7 +6,6 @@ const UserType = ` type UserType {
     email: String!
     phone: String!
     password: String!
-    repeatPassword: String!
     hourly_rate: Int
     description: String!
     favorite: [JobType]

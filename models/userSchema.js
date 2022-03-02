@@ -13,7 +13,6 @@ const userSchema = new Schema({
   email: { type: String, required: true },
   phone: { type: String, required: true },
   password: { type: String, required: true },
-  repeatPassword: { type: String, required: true },
   hourly_rate: { type: Number },
   description: { type: String, required: true },
   favorite: [{ type: mongoose.Schema.Types.ObjectId, ref: "jobs" }],
