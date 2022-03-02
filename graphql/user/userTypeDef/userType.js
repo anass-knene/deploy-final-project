@@ -11,17 +11,16 @@ const UserType = ` type UserType {
     description: String!
     favorite: [JobType]
   }`;
-const UserAuthType = `type UserAuthType {
-    userId: ID!
+const UserAuthType = `type UserAuthType {  
     token: String!
     tokenExpiration: Int!
     user: UserType
-    company: CompanyType
   }`;
 
 const VerifyType = `type VerifyType {
- user:UserAuthType
- token:String
+ user:UserType
+ company: CompanyType
+
   }`;
 
 module.exports = { UserType, UserAuthType, VerifyType };

@@ -9,7 +9,7 @@ const getUsers = async () => {
     throw new Error("no users found");
   }
 };
-const getOneUser = async (_, { id }) => {
+const getOneUser = async (_, { id }, { req }) => {
   const getUser = await UserCollection.findById(id).populate("favorite");
   if (getUser) {
     return getUser;
@@ -23,16 +23,9 @@ const getVerify = async (_, __, { req }) => {
   if (token) {
     const decode = jwt.verify(token, "secret-key");
     if (decode) {
-      const user =
-        decode.name === "user"
-          ? await UserCollection.findById(decode.userId)
-          : await CompanyCollection.findById(decode.companyId);
-
-      if (decode.name == "user") {
-        return { user: { userId: user._id, user }, token };
-      } else {
-        return { user: { userId: user._id, company: user }, token };
-      }
+      const user = await UserCollection.findById(decode.userId);
+      const company = await CompanyCollection.findById(decode.companyId);
+      return { user, company };
     } else {
       throw new Error("you have to login");
     }

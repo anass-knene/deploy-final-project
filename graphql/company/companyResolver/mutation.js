@@ -5,7 +5,11 @@ const bcrypt = require("bcrypt");
 const CompanyCollection = require("../../../models/companySchema");
 
 const loginCompany = async (_, { email, password }, { res }) => {
-  const company = await CompanyCollection.findOne({ email: email });
+  const company = await CompanyCollection.findOne({ email: email }).populate({
+    path: "jobs",
+    model: "jobs",
+  });
+
   if (!company) {
     throw new Error("company dos not exist");
   }
@@ -23,7 +27,6 @@ const loginCompany = async (_, { email, password }, { res }) => {
   res.header("token", token);
 
   return {
-    companyId: company.id,
     token: token,
     tokenExpiration: 2,
     company: company,
@@ -68,32 +71,37 @@ const addCompany = async (_, args) => {
       args.password = hashedPassword;
       const createCompany = new CompanyCollection(args);
       return await createCompany.save();
-    } else {
-      throw new Error("password not matches repeat Password");
-    }
+  
   } else {
     throw new Error("Company already exist");
   }
 };
 const updateCompany = async (_, args, { req }) => {
-  if (req.session.isAuthenticated) {
-    const updateCompany = await CompanyCollection.findByIdAndUpdate(
-      args.id,
-      { ...args },
-      { new: true }
-    );
-
-    return updateCompany;
-  } else {
-    throw new Error("you are not authenticated");
+  const token = req.headers["token"];
+  if (token) {
+    const decode = jwt.verify(token, "secret-key");
+    if (decode) {
+      const updateCompany = await CompanyCollection.findByIdAndUpdate(
+        args.id,
+        { ...args },
+        { new: true }
+      );
+      return updateCompany;
+    } else {
+      throw new Error("you have to login", 403);
+    }
   }
 };
 const deleteCompany = async (_, args, { req }) => {
-  if (req.session.isAuthenticated) {
-    const deleteCompany = await CompanyCollection.findByIdAndDelete(args.id);
-    return deleteCompany;
+  const token = req.headers["token"];
+  if (token) {
+    const decode = jwt.verify(token, "secret-key");
+    if (decode) {
+      const deleteCompany = await CompanyCollection.findByIdAndDelete(args.id);
+      return deleteCompany;
+    }
   } else {
-    throw new Error("you are not authenticated");
+    throw new Error("you have to login", 403);
   }
 };
 
