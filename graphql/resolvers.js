@@ -18,6 +18,7 @@ const {
   loginCompany,
   addCompany,
   updateCompany,
+  deleteCompany,
 } = require("./company/companyResolver/mutation");
 const { getJobs, getOneJob } = require("./job/jobResolver/query");
 const { addJob, updateJob, deleteJob } = require("./job/jobResolver/mutation");
