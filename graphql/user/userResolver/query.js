@@ -19,12 +19,15 @@ const getOneUser = async (_, { id }, { req }) => {
 };
 const getVerify = async (_, __, { req }) => {
   const token = req.headers["token"];
-
   if (token) {
     const decode = jwt.verify(token, "secret-key");
     if (decode) {
-      const user = await UserCollection.findById(decode.userId);
-      const company = await CompanyCollection.findById(decode.companyId);
+      const user = await UserCollection.findById(decode.userId).populate(
+        "favorite"
+      );
+      const company = await CompanyCollection.findById(decode.companyId)
+        .populate("jobs")
+        .populate("favorite");
       return { user, company };
     } else {
       throw new Error("you have to login");
