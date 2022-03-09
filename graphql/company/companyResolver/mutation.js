@@ -94,7 +94,12 @@ const deleteCompany = async (_, args, { req }) => {
   if (token) {
     const decode = jwt.verify(token, "secret-key");
     if (decode) {
+      const company = await CompanyCollection.findById(args.id);
+      company.jobs.forEach((ref) => {
+        const deleteJob = await JobCollection.findByIdAndDelete(ref);
+      });
       const deleteCompany = await CompanyCollection.findByIdAndDelete(args.id);
+
       return deleteCompany;
     }
   } else {
