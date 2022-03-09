@@ -12,7 +12,7 @@ const addCompany = `addCompany(
       description: String!
     ): CompanyType`;
 
-const deleteCompany = `deleteCompany(id: ID): CompanyType
+const deleteCompany = `deleteCompany(id: ID): Boolean
 `;
 const updateCompany = `updateCompany(
       id: ID!

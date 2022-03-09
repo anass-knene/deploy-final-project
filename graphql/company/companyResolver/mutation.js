@@ -99,8 +99,8 @@ const deleteCompany = async (_, args, { req }) => {
         const deleteJob = await JobCollection.findByIdAndDelete(ref);
       });
       const deleteCompany = await CompanyCollection.findByIdAndDelete(args.id);
-
-      return deleteCompany;
+      console.log(deleteCompany);
+      return true;
     }
   } else {
     throw new Error("you have to login", 403);
