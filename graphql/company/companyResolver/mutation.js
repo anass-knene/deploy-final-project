@@ -96,14 +96,16 @@ const deleteCompany = async (_, args, { req }) => {
     const decode = jwt.verify(token, "secret-key");
     if (decode) {
       const company = await CompanyCollection.findById(args.id);
-
-      company.jobs.forEach((ref) => {
-        const deleteJob = JobCollection.findByIdAndDelete(ref);
-      });
+      if (company.jobs.length > 0) {
+        let promisesArray = company.jobs.map((ref) => {
+          return JobCollection.findByIdAndDelete(ref);
+        });
+        await Promise.all(promisesArray);
+      }
       const deleteCompany = await CompanyCollection.findByIdAndDelete(args.id);
       console.log(deleteCompany);
 
-      return true;
+      return { success: true };
     }
   } else {
     throw new Error("you have to login", 403);

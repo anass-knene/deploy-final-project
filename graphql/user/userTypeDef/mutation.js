@@ -10,7 +10,7 @@ const addUser = `addUser(
       description: String!
     ): UserType`;
 
-const deleteUser = ` deleteUser(id: ID): UserType`;
+const deleteUser = ` deleteUser(id: ID): DeleteResponse`;
 
 const updateUser = ` updateUser(
       id: ID!

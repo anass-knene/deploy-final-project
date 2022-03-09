@@ -87,8 +87,8 @@ const deleteUser = async (_, args, { req }) => {
   if (token) {
     const decode = jwt.verify(token, "secret-key");
     if (decode) {
-      const deleteUser = await UserCollection.findByIdAndDelete(args.id);
-      return deleteUser;
+      await UserCollection.findByIdAndDelete(args.id);
+      return { success: true };
     } else {
       throw new Error("you have to login");
     }
