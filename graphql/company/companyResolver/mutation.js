@@ -3,6 +3,7 @@ const { UserInputError } = require("apollo-server");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const CompanyCollection = require("../../../models/companySchema");
+const JobCollection = require("../../../models/jobSchema");
 
 const loginCompany = async (_, { email, password }, { res }) => {
   const company = await CompanyCollection.findOne({ email: email }).populate({
