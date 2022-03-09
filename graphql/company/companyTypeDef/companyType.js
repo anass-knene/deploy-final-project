@@ -12,10 +12,13 @@ const CompanyType = `type CompanyType {
     favorite: [UserType]
     jobs: [JobType]
   }`;
+const BooleanType = `type DeleteResponse{
+  success: Boolean
+}`;
 
 const CompanyAuthType = `  type CompanyAuthType {
     token: String!
     tokenExpiration: Int!
     company: CompanyType
   }`;
-module.exports = { CompanyType, CompanyAuthType };
+module.exports = { CompanyType, CompanyAuthType, BooleanType };

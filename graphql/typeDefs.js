@@ -12,6 +12,7 @@ const {
 const {
   CompanyType,
   CompanyAuthType,
+  BooleanType,
 } = require("./company/companyTypeDef/companyType");
 
 const { JobType, ShortCompanyType } = require("./job/jobTypeDef/jobType");
@@ -43,7 +44,8 @@ const typeDefs = gql`
     ${CompanyAuthType}
     ${ShortCompanyType}
     ${JobType}
-    ${VerifyType}                      
+    ${VerifyType}
+   ${BooleanType}                
   type Query {
     
     ${getUsers}
