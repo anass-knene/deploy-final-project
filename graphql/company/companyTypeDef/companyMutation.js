@@ -12,8 +12,7 @@ const addCompany = `addCompany(
       description: String!
     ): CompanyType`;
 
-const deleteCompany = `deleteCompany(id: ID): Boolean
-`;
+const deleteCompany = `deleteCompany(id: ID):DeleteResponse`;
 const updateCompany = `updateCompany(
       id: ID!
       company_Name: String
