@@ -6,7 +6,7 @@ const addJob = ` addJob(
       job_description: String!
       created_by: ID!
     ): JobType`;
-const deleteJob = `deleteJob(id: ID): JobType`;
+const deleteJob = `deleteJob(id: ID): DeleteResponse`;
 const updateJob = `updateJob(
       id: ID!
       job_Title: String

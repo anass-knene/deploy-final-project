@@ -50,8 +50,8 @@ const deleteJob = async (_, args, { req }) => {
   if (token) {
     const decode = jwt.verify(token, "secret-key");
     if (decode) {
-      const deleteJob = await JobCollection.findByIdAndDelete(args.id);
-      return deleteJob;
+      await JobCollection.findByIdAndDelete(args.id);
+      return { success: true };
     }
   } else {
     throw new ApolloError("yoh have to login", 403);
