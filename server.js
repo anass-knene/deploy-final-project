@@ -1,15 +1,11 @@
 const express = require("express");
+const { graphqlUploadExpress } = require("graphql-upload");
+const stream = require("stream");
+
 const app = express();
-const session = require("express-session");
+
 const cookieParser = require("cookie-parser");
-// app.use(
-//   session({
-//     secret: "secret-key",
-//     resave: false,
-//     saveUninitialized: false,
-//     cookie: { expires: 24 * 60 * 60 * 1000, httpOnly: false },
-//   })
-// );
+
 app.use(cookieParser());
 const { ApolloServer } = require("apollo-server-express");
 const { typeDefs } = require("./graphql/typeDefs");
@@ -17,6 +13,7 @@ const { resolvers } = require("./graphql/resolvers");
 
 require("dotenv").config();
 const mongoose = require("mongoose");
+const ImagesCollection = require("./models/imageSchema");
 
 const { DB_USER, DB_PASS, DB_HOST, DB_NAME, PORT } = process.env;
 const mongoURL = `mongodb+srv://${DB_USER}:${DB_PASS}@${DB_HOST}/${DB_NAME}?retryWrites=true&w=majority`;
@@ -32,6 +29,22 @@ const server = new ApolloServer({
     return context;
   },
   cors: true,
+});
+app.use(graphqlUploadExpress());
+
+app.use(express.static(__dirname + "/public"));
+
+//serving image from databse
+app.get("/db/images/:filename", async (req, res) => {
+  const image = await ImagesCollection.findOne({
+    filename: req.params.filename,
+  });
+  if (image) {
+    const readStream = stream.Readable.from(image.data);
+    readStream.pipe(res);
+  } else {
+    res.send("no image found");
+  }
 });
 
 server.start().then(() => {

@@ -36,8 +36,11 @@ const {
   updateUser,
   updateUserFavorite,
 } = require("./user/userTypeDef/mutation");
+const { ImageType } = require("./image/imageTypeDef/imageType");
+const { singleUpload } = require("./image/imageTypeDef/imageMutation");
 
 const typeDefs = gql`
+    scalar Upload
     ${UserType}
     ${UserAuthType}
     ${CompanyType}
@@ -45,7 +48,8 @@ const typeDefs = gql`
     ${ShortCompanyType}
     ${JobType}
     ${VerifyType}
-   ${BooleanType}                
+    ${BooleanType}
+    ${ImageType}                
   type Query {
     
     ${getUsers}
@@ -73,6 +77,8 @@ const typeDefs = gql`
     ${addJob}
     ${deleteJob}
     ${updateJob}
+    # image Mutation
+    ${singleUpload}
 
   }
 `;
