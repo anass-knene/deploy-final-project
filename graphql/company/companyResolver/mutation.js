@@ -84,6 +84,11 @@ const updateCompany = async (_, args, { req }) => {
         { ...args },
         { new: true }
       );
+      if (args.file) {
+        let storImage = await handleFileUploadMongoDB(file);
+        updateCompany.avatar = storImage.imageUrl;
+        await updateCompany.save();
+      }
       return updateCompany;
     } else {
       throw new Error("you have to login", 403);

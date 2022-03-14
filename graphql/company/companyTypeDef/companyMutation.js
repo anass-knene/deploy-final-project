@@ -18,6 +18,7 @@ const updateCompany = `updateCompany(
       company_Name: String
       owner_name: String
       avatar: String
+      file:Upload
       company_type: String
       address: String
       phone: String
