@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const CompanyCollection = require("../../../models/companySchema");
 const JobCollection = require("../../../models/jobSchema");
-
+const handleFileUploadMongoDB = require("../../image/storeImageInMongoDB");
 const loginCompany = async (_, { email, password }, { res }) => {
   const company = await CompanyCollection.findOne({ email: email }).populate({
     path: "jobs",
