@@ -52,8 +52,8 @@ const resolvers = {
     addUser: (_, args) => addUser(_, args),
     updateUser: (_, args, { req }) => updateUser(_, args, { req }),
     deleteUser: (_, args, { req }) => deleteUser(_, args, { req }),
-    // updateUserFavorite: (_, args, { req }) =>
-    //   updateUserFavorite(_, args, { req }),
+    updateUserFavorite: (_, args, { req }) =>
+      updateUserFavorite(_, args, { req }),
     // job Mutation
     addJob: (_, args, { req }) => addJob(_, args, { req }),
     updateJob: (_, args, { req }) => updateJob(_, args, { req }),

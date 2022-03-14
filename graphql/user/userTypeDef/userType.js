@@ -10,6 +10,10 @@ const UserType = ` type UserType {
     description: String!
     favorite: [JobType]
   }`;
+const FavoriteArgsType = `type FavoriteArgsType{
+  userId: ID!
+  job:    JobType!
+}`;
 const UserAuthType = `type UserAuthType {  
     token: String!
     tokenExpiration: Int!
@@ -22,4 +26,4 @@ const VerifyType = `type VerifyType {
 
   }`;
 
-module.exports = { UserType, UserAuthType, VerifyType };
+module.exports = { FavoriteArgsType, UserType, UserAuthType, VerifyType };

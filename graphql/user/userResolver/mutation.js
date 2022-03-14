@@ -102,10 +102,10 @@ const updateUserFavorite = async (_, args, { req }) => {
     if (decode) {
       const findUser = await UserCollection.findById(args.userId);
       if (findUser) {
-        let filterUserFavorite = findUser.favorite.filter(
-          (item) => item._id !== args.favId
-        );
-        findUser.favorite = filterUserFavorite;
+        // let filterUserFavorite = findUser.favorite.filter(
+        //   (item) => item._id !== args.favId
+        // );
+        findUser.favorite = [...findUser.favorite, args.job];
         await findUser.save();
         return findUser;
       } else {

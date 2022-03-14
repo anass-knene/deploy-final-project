@@ -15,7 +15,12 @@ const {
   BooleanType,
 } = require("./company/companyTypeDef/companyType");
 
-const { JobType, ShortCompanyType } = require("./job/jobTypeDef/jobType");
+const {
+  JobType,
+  ShortCompanyType,
+  inputType,
+  inputShortCompanyType,
+} = require("./job/jobTypeDef/jobType");
 const { getOneJob, getJobs } = require("./job/jobTypeDef/jobQuery");
 const {
   addJob,
@@ -49,7 +54,9 @@ const typeDefs = gql`
     ${JobType}
     ${VerifyType}
     ${BooleanType}
-    ${ImageType}                
+    ${ImageType}
+    ${inputType}
+    ${inputShortCompanyType}
   type Query {
     
     ${getUsers}
