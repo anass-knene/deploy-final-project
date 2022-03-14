@@ -76,6 +76,7 @@ const addCompany = async (_, args) => {
 };
 const updateCompany = async (_, args, { req }) => {
   const token = req.headers["token"];
+
   if (token) {
     const decode = jwt.verify(token, "secret-key");
     if (decode) {
@@ -84,11 +85,16 @@ const updateCompany = async (_, args, { req }) => {
         { ...args },
         { new: true }
       );
-      if (args.file) {
+
+      const { file } = await args.file;
+      if (file) {
         let storImage = await handleFileUploadMongoDB(file);
         updateCompany.avatar = storImage.imageUrl;
         await updateCompany.save();
+
+        console.log(updateCompany);
       }
+
       return updateCompany;
     } else {
       throw new Error("you have to login", 403);
