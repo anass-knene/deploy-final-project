@@ -23,7 +23,8 @@ const updateUser = ` updateUser(
       hourly_rate: Int
       description: String
     ): UserType`;
-const updateUserFavorite = `updateUserFavorite(userId:ID!,favId:ID!):UserType`;
+
+const updateUserFavorite = `updateUserFavorite(userId:ID!,job:JobInputType):UserType`;
 
 module.exports = {
   loginUser,
