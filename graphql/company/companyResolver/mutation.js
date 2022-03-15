@@ -44,7 +44,7 @@ const addCompany = async (_, args) => {
     password: Joi.string().regex(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{5,15}$/
     ),
-    description: Joi.string().min(5).max(150).required(),
+    description: Joi.string().min(5).max(500).required(),
   });
   const { value, error } = schema.validate(args, { abortEarly: false });
 
