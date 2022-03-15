@@ -86,8 +86,8 @@ const updateCompany = async (_, args, { req }) => {
         { new: true }
       );
 
-      const { file } = await args.file;
-      if (file) {
+      if (await args.file) {
+        const { file } = await args.file;
         let storImage = await handleFileUploadMongoDB(file);
         updateCompany.avatar = storImage.imageUrl;
         await updateCompany.save();
