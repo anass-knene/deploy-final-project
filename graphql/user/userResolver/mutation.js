@@ -3,6 +3,7 @@ const { UserInputError } = require("apollo-server");
 const UserCollection = require("../../../models/userSchema");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const handleFileUploadMongoDB = require("../../image/storeImageInMongoDB");
 
 const loginUser = async (_, { email, password }, { req }) => {
   const user = await UserCollection.findOne({ email: email }).populate({
@@ -76,10 +77,16 @@ const updateUser = async (_, args, { req }) => {
         { ...args },
         { new: true }
       );
+      if (await args.file) {
+        const { file } = await args.file;
+        let storImage = await handleFileUploadMongoDB(file);
+        updateUser.avatar = storImage.imageUrl;
+        await updateUser.save();
+      }
       return updateUser;
     }
   } else {
-    throw new Error("you have to login");
+    throw new Error("you have to login", 403);
   }
 };
 const deleteUser = async (_, args, { req }) => {
