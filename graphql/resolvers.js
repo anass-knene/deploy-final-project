@@ -45,8 +45,7 @@ const resolvers = {
       loginCompany(_, { email, password }, { req, res }),
     // company Mutation
     addCompany: (_, args) => addCompany(_, args),
-    updateCompany: (_, args, { req }) =>
-      /* middleware(_,args,{req})=> */ updateCompany(_, args, { req }),
+    updateCompany: (_, args, { req }) => updateCompany(_, args, { req }),
     deleteCompany: (_, args, { req }) => deleteCompany(_, args, { req }),
     // user Mutation
     addUser: (_, args) => addUser(_, args),

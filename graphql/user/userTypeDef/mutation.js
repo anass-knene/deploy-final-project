@@ -16,7 +16,7 @@ const updateUser = ` updateUser(
       id: ID!
       first_name: String
       last_name: String
-      avatar: String
+      file:Upload
       email: String
       password: String
       phone: String
