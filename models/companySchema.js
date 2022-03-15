@@ -8,7 +8,8 @@ const companySchema = new Schema({
   avatar: {
     type: String,
     default: function () {
-      return `https://source.unsplash.com/1600x900/?${this.company_type}`;
+      // return `https://source.unsplash.com/1600x900/?${this.company_type}`;
+      return `https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png`;
     },
   },
   address: { type: String, required: true },
