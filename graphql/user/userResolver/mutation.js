@@ -11,7 +11,7 @@ const loginUser = async (_, { email, password }, { req }) => {
     model: "jobs",
   });
   if (!user) {
-    throw new Error("user dos not exist");
+    throw new Error("Account does not exist,please sign up");
   }
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) {
