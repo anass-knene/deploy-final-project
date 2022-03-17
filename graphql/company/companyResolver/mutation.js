@@ -12,7 +12,7 @@ const loginCompany = async (_, { email, password }, { res }) => {
   });
 
   if (!company) {
-    throw new Error("company dos not exist");
+    throw new Error("Account does not exist,please sign up");
   }
   const isMatch = await bcrypt.compare(password, company.password);
   if (!isMatch) {
