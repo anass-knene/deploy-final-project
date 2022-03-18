@@ -18,7 +18,7 @@ const inputShortCompanyType = `input inputShortCompanyType {
   }`;
 
 const inputType = `  input JobInputType {
-  id:ID
+  id:ID!
 	job_Title: String!
   start_Date:String!
   end_Date: String!

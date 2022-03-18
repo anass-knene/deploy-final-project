@@ -120,5 +120,24 @@ const deleteCompany = async (_, args, { req }) => {
     throw new Error("you have to login", 403);
   }
 };
-
-module.exports = { loginCompany, addCompany, updateCompany, deleteCompany };
+const updateCompanyFavorite = async (_, args, { req }) => {
+  const token = req.headers["token"];
+  if (token) {
+    const decode = jwt.verify(token, "secret-key");
+    if (decode) {
+      const company = await CompanyCollection.findById(args.companyId);
+      if (company) {
+        company.favorite.push(args.userId);
+        await company.save();
+        return company;
+      }
+    }
+  }
+};
+module.exports = {
+  updateCompanyFavorite,
+  loginCompany,
+  addCompany,
+  updateCompany,
+  deleteCompany,
+};
