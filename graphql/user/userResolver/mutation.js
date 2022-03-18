@@ -6,10 +6,7 @@ const bcrypt = require("bcrypt");
 const handleFileUploadMongoDB = require("../../image/storeImageInMongoDB");
 
 const loginUser = async (_, { email, password }, { req }) => {
-  const user = await UserCollection.findOne({ email: email }).populate({
-    path: "favorite",
-    model: "jobs",
-  });
+  const user = await UserCollection.findOne({ email: email });
   if (!user) {
     throw new Error("Account does not exist,please sign up");
   }
@@ -17,7 +14,7 @@ const loginUser = async (_, { email, password }, { req }) => {
   if (!isMatch) {
     throw new Error("password is incorrect");
   }
-  console.log(user.id);
+
   const token = jwt.sign(
     { userId: user.id, email: user.email, name: "user" },
     "secret-key",
