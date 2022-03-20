@@ -13,6 +13,7 @@ const addCompany = `addCompany(
     ): CompanyType`;
 
 const updateCompanyFavorite = `updateCompanyFavorite(userId:ID!,companyId:ID!):CompanyType`;
+const deleteCompanyFavorite = `deleteCompanyFavorite(userId:ID!,companyId:ID!):CompanyType`;
 const deleteCompany = `deleteCompany(id: ID):DeleteResponse`;
 const updateCompany = `updateCompany(
       id: ID!
@@ -29,6 +30,7 @@ const updateCompany = `updateCompany(
       
     ): CompanyType`;
 module.exports = {
+  deleteCompanyFavorite,
   updateCompanyFavorite,
   loginCompany,
   addCompany,

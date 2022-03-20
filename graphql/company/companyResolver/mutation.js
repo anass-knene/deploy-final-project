@@ -6,10 +6,12 @@ const CompanyCollection = require("../../../models/companySchema");
 const JobCollection = require("../../../models/jobSchema");
 const handleFileUploadMongoDB = require("../../image/storeImageInMongoDB");
 const loginCompany = async (_, { email, password }, { res }) => {
-  const company = await CompanyCollection.findOne({ email: email }).populate({
-    path: "jobs",
-    model: "jobs",
-  });
+  const company = await CompanyCollection.findOne({ email: email })
+    .populate({
+      path: "jobs",
+      model: "jobs",
+    })
+    .populate("favorite");
 
   if (!company) {
     throw new Error("Account does not exist,please sign up");
@@ -128,13 +130,44 @@ const updateCompanyFavorite = async (_, args, { req }) => {
       const company = await CompanyCollection.findById(args.companyId);
       if (company) {
         company.favorite.push(args.userId);
+
         await company.save();
         return company;
       }
     }
   }
 };
+const deleteCompanyFavorite = async (_, args, { req }) => {
+  const token = req.headers["token"];
+  if (token) {
+    const decode = jwt.verify(token, "secret-key");
+    if (decode) {
+      const company = await CompanyCollection.findById(args.companyId);
+      if (company) {
+        company.favorite.filter((item) => item.id === args.userId);
+
+        let findObjectId = company.favorite.map((item) => {
+          return item.toString();
+        });
+
+        let filterObjectId = findObjectId.filter(
+          (item) => item !== args.userId
+        );
+
+        company.favorite = [...(company.favorite = filterObjectId)];
+
+        // console.log("====================================");
+        // console.log(company);
+        // console.log("====================================");
+        await company.save();
+        return company;
+      }
+    }
+  }
+};
+
 module.exports = {
+  deleteCompanyFavorite,
   updateCompanyFavorite,
   loginCompany,
   addCompany,
