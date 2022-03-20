@@ -20,6 +20,7 @@ const {
   updateCompany,
   deleteCompany,
   updateCompanyFavorite,
+  deleteCompanyFavorite,
 } = require("./company/companyResolver/mutation");
 const { getJobs, getOneJob } = require("./job/jobResolver/query");
 const { addJob, updateJob, deleteJob } = require("./job/jobResolver/mutation");
@@ -50,6 +51,8 @@ const resolvers = {
     deleteCompany: (_, args, { req }) => deleteCompany(_, args, { req }),
     updateCompanyFavorite: (_, args, { req }) =>
       updateCompanyFavorite(_, args, { req }),
+    deleteCompanyFavorite: (_, args, { req }) =>
+      deleteCompanyFavorite(_, args, { req }),
     // user Mutation
     addUser: (_, args) => addUser(_, args),
     updateUser: (_, args, { req }) => updateUser(_, args, { req }),

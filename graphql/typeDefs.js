@@ -5,6 +5,7 @@ const {
   deleteCompany,
   updateCompany,
   updateCompanyFavorite,
+  deleteCompanyFavorite,
 } = require("./company/companyTypeDef/companyMutation");
 const {
   getCompanies,
@@ -83,6 +84,7 @@ const typeDefs = gql`
     ${deleteCompany}
     ${updateCompany}
     ${updateCompanyFavorite}
+    ${deleteCompanyFavorite}
     # job Mutation
     ${addJob}
     ${deleteJob}
