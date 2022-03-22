@@ -8,7 +8,7 @@ const handleFileUploadMongoDB = require("../../image/storeImageInMongoDB");
 const loginUser = async (_, { email, password }, { req }) => {
   const user = await UserCollection.findOne({ email: email });
   if (!user) {
-    throw new Error("Account does not exist,please sign up");
+    throw new Error("Account not found,please sign up");
   }
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) {
@@ -61,7 +61,7 @@ const addUser = async (_, args) => {
     const createUser = new UserCollection(args);
     return await createUser.save();
   } else {
-    throw new Error("user already exists");
+    throw new Error("Account already exists");
   }
 };
 const updateUser = async (_, args, { req }) => {
@@ -113,7 +113,7 @@ const updateUserFavorite = async (_, args, { req }) => {
         await findUser.save();
         return findUser;
       } else {
-        throw new Error("no such user find");
+        throw new Error("no such user found");
       }
     } else {
       throw new Error("you have to login");

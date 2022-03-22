@@ -14,7 +14,7 @@ const loginCompany = async (_, { email, password }, { res }) => {
     .populate("favorite");
 
   if (!company) {
-    throw new Error("Account does not exist,please sign up");
+    throw new Error("Account not found,please sign up");
   }
   const isMatch = await bcrypt.compare(password, company.password);
   if (!isMatch) {
