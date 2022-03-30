@@ -32,8 +32,10 @@ const server = new ApolloServer({
 });
 app.use(graphqlUploadExpress());
 
-app.use(express.static(__dirname + "/public"));
-
+app.use(express.static(__dirname + "/build"));
+app.get("/", function (req, res) {
+  res.sendFile(__dirname + "/build/index.html");
+});
 //serving image from databse
 app.get("/db/images/:filename", async (req, res) => {
   const image = await ImagesCollection.findOne({
