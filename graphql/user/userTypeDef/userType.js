@@ -6,21 +6,24 @@ const UserType = ` type UserType {
     email: String!
     phone: String!
     password: String!
-    repeatPassword: String!
     hourly_rate: Int
     description: String!
     favorite: [JobType]
   }`;
-const UserAuthType = `type UserAuthType {
-    userId: ID!
+const FavoriteArgsType = `type FavoriteArgsType{
+  userId: ID!
+  job:    JobType!
+}`;
+const UserAuthType = `type UserAuthType {  
     token: String!
     tokenExpiration: Int!
     user: UserType
   }`;
 
-const verifyType = ` type VerifyType {
- user:UserAuthType
- token:String
+const VerifyType = `type VerifyType {
+ user:UserType
+ company: CompanyType
+
   }`;
 
-module.exports = { UserType, UserAuthType, verifyType };
+module.exports = { FavoriteArgsType, UserType, UserAuthType, VerifyType };

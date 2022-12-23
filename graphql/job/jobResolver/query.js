@@ -1,7 +1,9 @@
 const JobCollection = require("../../../models/jobSchema");
 
 const getJobs = async () => {
-  const getAllJobs = await JobCollection.find({}).populate("created_by");
+  const getAllJobs = await JobCollection.find({})
+    .sort({ issued_At: -1 })
+    .populate("created_by");
 
   if (getAllJobs) {
     return getAllJobs;

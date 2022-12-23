@@ -22,8 +22,10 @@
     "express-session": "^1.17.2",
     "graphql": "^15.8.0",
     "graphql-tools": "^8.2.0",
+    "graphql-upload": "^13.0.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.2.1"
+    "mongoose": "^6.2.1",
+    "uuid": "^8.3.2"
   },
   "engines": {
     "node": "16.13.0",

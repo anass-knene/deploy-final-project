@@ -18,6 +18,9 @@ const {
   loginCompany,
   addCompany,
   updateCompany,
+  deleteCompany,
+  updateCompanyFavorite,
+  deleteCompanyFavorite,
 } = require("./company/companyResolver/mutation");
 const { getJobs, getOneJob } = require("./job/jobResolver/query");
 const { addJob, updateJob, deleteJob } = require("./job/jobResolver/mutation");
@@ -25,7 +28,7 @@ const { addJob, updateJob, deleteJob } = require("./job/jobResolver/mutation");
 const resolvers = {
   Query: {
     getUsers: () => getUsers(),
-    getOneUser: (_, { id }) => getOneUser(_, { id }),
+    getOneUser: (_, { id }, { req }) => getOneUser(_, { id }, { req }),
     getVerify: (_, __, { req }) => getVerify(_, __, { req }),
 
     // company queries
@@ -46,12 +49,16 @@ const resolvers = {
     addCompany: (_, args) => addCompany(_, args),
     updateCompany: (_, args, { req }) => updateCompany(_, args, { req }),
     deleteCompany: (_, args, { req }) => deleteCompany(_, args, { req }),
+    updateCompanyFavorite: (_, args, { req }) =>
+      updateCompanyFavorite(_, args, { req }),
+    deleteCompanyFavorite: (_, args, { req }) =>
+      deleteCompanyFavorite(_, args, { req }),
     // user Mutation
     addUser: (_, args) => addUser(_, args),
     updateUser: (_, args, { req }) => updateUser(_, args, { req }),
     deleteUser: (_, args, { req }) => deleteUser(_, args, { req }),
-    // updateUserFavorite: (_, args, { req }) =>
-    //   updateUserFavorite(_, args, { req }),
+    updateUserFavorite: (_, args, { req }) =>
+      updateUserFavorite(_, args, { req }),
     // job Mutation
     addJob: (_, args, { req }) => addJob(_, args, { req }),
     updateJob: (_, args, { req }) => updateJob(_, args, { req }),

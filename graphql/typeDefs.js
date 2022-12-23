@@ -4,6 +4,8 @@ const {
   addCompany,
   deleteCompany,
   updateCompany,
+  updateCompanyFavorite,
+  deleteCompanyFavorite,
 } = require("./company/companyTypeDef/companyMutation");
 const {
   getCompanies,
@@ -12,9 +14,15 @@ const {
 const {
   CompanyType,
   CompanyAuthType,
+  BooleanType,
 } = require("./company/companyTypeDef/companyType");
 
-const { JobType, ShortCompanyType } = require("./job/jobTypeDef/jobType");
+const {
+  JobType,
+  ShortCompanyType,
+  inputType,
+  inputShortCompanyType,
+} = require("./job/jobTypeDef/jobType");
 const { getOneJob, getJobs } = require("./job/jobTypeDef/jobQuery");
 const {
   addJob,
@@ -24,7 +32,7 @@ const {
 const {
   UserType,
   UserAuthType,
-  verifyType,
+  VerifyType,
 } = require("./user/userTypeDef/userType");
 const { getUsers, getOneUser, getVerify } = require("./user/userTypeDef/query");
 
@@ -35,15 +43,23 @@ const {
   updateUser,
   updateUserFavorite,
 } = require("./user/userTypeDef/mutation");
+const { ImageType } = require("./image/imageTypeDef/imageType");
+const { singleUpload } = require("./image/imageTypeDef/imageMutation");
 
 const typeDefs = gql`
+    scalar Upload
     ${UserType}
     ${UserAuthType}
     ${CompanyType}
     ${CompanyAuthType}
     ${ShortCompanyType}
+ 
     ${JobType}
-    ${verifyType}                      
+    ${VerifyType}
+    ${BooleanType}
+    ${ImageType}
+    ${inputType}
+    ${inputShortCompanyType}
   type Query {
     
     ${getUsers}
@@ -62,15 +78,19 @@ const typeDefs = gql`
     ${addUser}
     ${deleteUser}
     ${updateUser}
-    ${updateUserFavorite}
     # company Mutation
+    ${updateUserFavorite}
     ${addCompany}
     ${deleteCompany}
     ${updateCompany}
+    ${updateCompanyFavorite}
+    ${deleteCompanyFavorite}
     # job Mutation
     ${addJob}
     ${deleteJob}
     ${updateJob}
+    # image Mutation
+    ${singleUpload}
 
   }
 `;
