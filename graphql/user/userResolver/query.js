@@ -1,6 +1,6 @@
 const CompanyCollection = require("../../../models/companySchema");
 const UserCollection = require("../../../models/userSchema");
-
+const jwt = require("jsonwebtoken");
 const getUsers = async () => {
   const getAllUsers = await UserCollection.find({}).populate("favorite");
   if (getAllUsers) {
@@ -9,7 +9,7 @@ const getUsers = async () => {
     throw new Error("no users found");
   }
 };
-const getOneUser = async (_, { id }) => {
+const getOneUser = async (_, { id }, { req }) => {
   const getUser = await UserCollection.findById(id).populate("favorite");
   if (getUser) {
     return getUser;
@@ -18,19 +18,17 @@ const getOneUser = async (_, { id }) => {
   }
 };
 const getVerify = async (_, __, { req }) => {
-  const tokenCookie = req.session.cookie.token;
-
-  console.log("====================================");
-  console.log(req);
-  console.log("====================================");
-  if (tokenCookie) {
-    const decode = jwt.verify(tokenCookie, "secret-key");
+  const token = req.headers["token"];
+  if (token) {
+    const decode = jwt.verify(token, "secret-key");
     if (decode) {
-      const user =
-        decode.name === "user"
-          ? await UserCollection.findById(decode.id)
-          : await CompanyCollection.findById(decode.id);
-      return { user: user };
+      const user = await UserCollection.findById(decode.userId).populate(
+        "favorite"
+      );
+      const company = await CompanyCollection.findById(decode.companyId)
+        .populate("jobs")
+        .populate("favorite");
+      return { user, company };
     } else {
       throw new Error("you have to login");
     }
