@@ -21,14 +21,7 @@ mongoose
   .connect(mongoURL)
   .then(() => console.log("successfully connect to the database Atlas"))
   .catch((err) => console.log(`error connecting to the database Atlas ${err}`));
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  context: (context) => {
-    return context;
-  },
-  cors: true,
-});
+
 app.use(graphqlUploadExpress());
 
 app.use(express.static(__dirname + "/build"));
@@ -47,7 +40,14 @@ app.get("/db/images/:filename", async (req, res) => {
     res.send("no image found");
   }
 });
-
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: (context) => {
+    return context;
+  },
+  cors: true,
+});
 server.start().then(() => {
   server.applyMiddleware({ app });
   app.listen(PORT, () =>
