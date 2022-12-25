@@ -12,7 +12,7 @@ const handleFileUploadMongoDB = async (file) => {
       }
       const Image = new ImagesCollection({
         filename: `${key}_${filename}`,
-        imageUrl: `https://deploy-final-project-anass.herokuapp.com/db/images/${key}_${filename}`,
+        imageUrl: `https://staff-service.cyclic.app/db/images/${key}_${filename}`,
         data: Buffer.concat(chunks),
       });
       await Image.save();
