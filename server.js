@@ -23,6 +23,7 @@ app.use(graphqlUploadExpress());
 const { ApolloServer } = require("apollo-server-express");
 const { typeDefs } = require("./graphql/typeDefs");
 const { resolvers } = require("./graphql/resolvers");
+mongoose.set("strictQuery", true);
 
 app.use(express.static(__dirname + "/build"));
 app.get("/", function (req, res) {
