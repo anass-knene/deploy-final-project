@@ -7,9 +7,6 @@ const app = express();
 const cookieParser = require("cookie-parser");
 
 app.use(cookieParser());
-const { ApolloServer } = require("apollo-server-express");
-const { typeDefs } = require("./graphql/typeDefs");
-const { resolvers } = require("./graphql/resolvers");
 
 require("dotenv").config();
 const mongoose = require("mongoose");
@@ -23,6 +20,9 @@ mongoose
   .catch((err) => console.log(`error connecting to the database Atlas ${err}`));
 
 app.use(graphqlUploadExpress());
+const { ApolloServer } = require("apollo-server-express");
+const { typeDefs } = require("./graphql/typeDefs");
+const { resolvers } = require("./graphql/resolvers");
 
 app.use(express.static(__dirname + "/build"));
 app.get("/", function (req, res) {
