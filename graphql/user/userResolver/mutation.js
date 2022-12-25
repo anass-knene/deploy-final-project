@@ -10,10 +10,10 @@ const loginUser = async (_, { email, password }, { req }) => {
   if (!user) {
     throw new Error("Account not found,please sign up");
   }
-  // const isMatch = await bcrypt.compare(password, user.password);
-  // if (!isMatch) {
-  //   throw new Error("password is incorrect");
-  // }
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) {
+    throw new Error("password is incorrect");
+  }
 
   const token = jwt.sign(
     { userId: user.id, email: user.email, name: "user" },
