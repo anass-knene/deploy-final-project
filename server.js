@@ -1,15 +1,13 @@
 const express = require("express");
 const { graphqlUploadExpress } = require("graphql-upload");
 const stream = require("stream");
+const app = express();
+const cookieParser = require("cookie-parser");
+app.use(cookieParser());
 
 const { ApolloServer } = require("apollo-server-express");
 const { typeDefs } = require("./graphql/typeDefs");
 const { resolvers } = require("./graphql/resolvers");
-const app = express();
-
-const cookieParser = require("cookie-parser");
-
-app.use(cookieParser());
 
 require("dotenv").config();
 const mongoose = require("mongoose");
@@ -22,9 +20,10 @@ mongoose
   .then(() => console.log("successfully connect to the database Atlas"))
   .catch((err) => console.log(`error connecting to the database Atlas ${err}`));
 
-app.use(graphqlUploadExpress());
-mongoose.set("strictQuery", true);
-
+app.use(express.static(__dirname + "/build"));
+app.get("/", function (req, res) {
+  res.sendFile(__dirname + "/build/index.html");
+});
 //serving image from databse
 app.get("/db/images/:filename", async (req, res) => {
   const image = await ImagesCollection.findOne({
@@ -37,10 +36,9 @@ app.get("/db/images/:filename", async (req, res) => {
     res.send("no image found");
   }
 });
-app.use(express.static(__dirname + "/build"));
-app.get("/", function (req, res) {
-  res.sendFile(__dirname + "/build/index.html");
-});
+app.use(graphqlUploadExpress());
+mongoose.set("strictQuery", true);
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
