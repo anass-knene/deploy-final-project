@@ -17,10 +17,14 @@ const ImagesCollection = require("./models/imageSchema");
 
 const { DB_USER, DB_PASS, DB_HOST, DB_NAME, PORT } = process.env;
 const mongoURL = `mongodb+srv://${DB_USER}:${DB_PASS}@${DB_HOST}/${DB_NAME}?retryWrites=true&w=majority`;
-mongoose
-  .connect(mongoURL)
-  .then(() => console.log("successfully connect to the database Atlas"))
-  .catch((err) => console.log(`error connecting to the database Atlas ${err}`));
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(mongoURL);
+    console.log("successfully connect to the database Atlas");
+  } catch (error) {
+    console.log(`error connecting to the database Atlas ${error}`);
+  }
+};
 
 app.use(graphqlUploadExpress());
 mongoose.set("strictQuery", true);
@@ -49,9 +53,12 @@ const server = new ApolloServer({
   },
   cors: true,
 });
-server.start().then(() => {
-  server.applyMiddleware({ app });
-  app.listen(PORT, () =>
-    console.log(`🚀 apolloServer Server ready at  ${PORT}`)
-  );
+
+connectDB().then(() => {
+  server.start().then(() => {
+    server.applyMiddleware({ app });
+    app.listen(PORT, () =>
+      console.log(`🚀 apolloServer Server ready at  ${PORT}`)
+    );
+  });
 });
